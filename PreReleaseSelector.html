@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Platform - PreRelease Assigner</title>
+</head>
+<style>
+    span {
+        font-weight: bold;
+        display: inline-block;
+        width: 90px;
+    }
+    hr {
+        width: 35%;
+        float: left;
+    }
+
+    #selections {
+        border-right: 1px solid black;
+        float: left;
+        padding: 0 20px 0 20px;
+    }
+</style>
+<body>
+    <h2>Platform Services - Pre-release Testing Assigner</h2>
+    <br>
+    <hr>
+    <br>
+    <div id="selections">
+        <div id="radios">
+            <h3>Availability</h3>
+        </div>
+        <div id="radioSelectionOutput">
+        </div>
+    </div>
+
+    <script>
+        //employee list
+        let employeeArray = ["Brett", "Brian", "Chris", "Dave", "Jim", "Lewis", "Perry", "Robert", "Scott", "Trent"];
+
+        //print list of all platform employees to the screen with radio buttons
+        function populateRadios() {
+            let list = document.getElementById('radios');
+            for (let i = 0; i < employeeArray.length; i++) {
+                list.innerHTML +=
+                    "<form id=\"" + employeeArray[i] + "\">" +
+                    "<span>" + employeeArray[i] + "</span>" +
+                    "<input type=\"radio\" name=\"" + employeeArray[i] + "\" value=\"pto\">PTO &nbsp &nbsp" +
+                    "<input type=\"radio\" name=\"" + employeeArray[i] + "\" value=\"work\" checked>Work &nbsp &nbsp" +
+                    "<input type=\"radio\" name=\"" + employeeArray[i] + "\" value=\"netSuite\">NetSuite<br><br>" +
+                    "</form>";
+            }
+            list.innerHTML += "<br><button onclick=\"radioSelections()\" >Load</button>";
+        }
+        populateRadios();
+
+        //gets the list of those who are at work
+        function radioSelections() {
+            let onPto  = []; let atWork = []; let forNs  = [];
+
+            for (let i = 0; i < employeeArray.length; i++) {
+                let employee = document.getElementById(employeeArray[i]);
+                if (employee.elements[employeeArray[i]].value === "pto") {
+                    onPto.push(employeeArray[i]);
+                } else if (employee.elements[employeeArray[i]].value === "work") {
+                    atWork.push(employeeArray[i]);
+                } else if (employee.elements[employeeArray[i]].value === "netSuite") {
+                    forNs.push(employeeArray[i]);
+                } else {
+                    alert("No selection has been made for " + employeeArray[i]);
+                }
+            }
+            //displays array contents to the screen
+            document.getElementById("radioSelectionOutput").innerHTML = "";
+            document.getElementById("radioSelectionOutput").innerHTML +=
+                "<br><hr>" +
+                "<h3>Selected</h3>" +
+                "<span>Work - " + atWork.length + "</span><br>" + atWork + "<br><br>" +
+                "<span>NetSuite - " + forNs.length + "</span><br>" + forNs + "<br><br>" +
+                "<span>PTO - " + onPto.length + "</span><br>" + onPto + "<br><br>";
+        }
+
+    </script>
+</body>
+</html>
